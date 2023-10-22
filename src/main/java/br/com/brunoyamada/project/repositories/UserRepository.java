@@ -6,6 +6,4 @@ import br.com.brunoyamada.project.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	
-
 }
