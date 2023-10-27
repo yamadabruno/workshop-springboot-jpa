@@ -1,7 +1,6 @@
 package br.com.brunoyamada.project.entities.pk;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import br.com.brunoyamada.project.entities.Order;
 import br.com.brunoyamada.project.entities.Product;
@@ -12,31 +11,40 @@ import jakarta.persistence.ManyToOne;
 @Embeddable
 public class OrderItemPK implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "product_id")
-	private Product Product;
-	
+	private Product product;
+
 	public Order getOrder() {
 		return order;
 	}
+	
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+	
 	public Product getProduct() {
-		return Product;
+		return product;
 	}
+	
 	public void setProduct(Product product) {
-		Product = product;
+		this.product = product;
 	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(Product, order);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -46,9 +54,16 @@ public class OrderItemPK implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItemPK other = (OrderItemPK) obj;
-		return Objects.equals(Product, other.Product) && Objects.equals(order, other.order);
+		if (order == null) {
+			if (other.order != null)
+				return false;
+		} else if (!order.equals(other.order))
+			return false;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
+		return true;
 	}
-	
-	
-
 }
